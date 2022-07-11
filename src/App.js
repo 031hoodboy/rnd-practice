@@ -1,8 +1,8 @@
 import React from "react";
 import { Rnd } from "react-rnd";
 
-const cellWidth = 200;
-const cellHeight = 200;
+const cellWidth = 100;
+const cellHeight = 100;
 
 const Box = () => (
   <div className="box" style={{ margin: 0, height: "100%" }}>
@@ -11,19 +11,23 @@ const Box = () => (
 );
 
 const App = () => (
-  <Rnd
-    default={{
-      x: 0,
-      y: 0,
-      width: cellWidth * 2,
-      height: 200,
-    }}
-    minWidth={cellWidth}
-    minHeight={cellHeight}
-    bounds="window"
-  >
-    <Box />
-  </Rnd>
+  <>
+    {[...Array(4).keys()].map((key) => (
+      <Rnd
+        default={{
+          x: key * 200,
+          y: key * 200,
+          width: cellWidth * 2,
+          height: 200,
+        }}
+        minWidth={cellWidth}
+        minHeight={cellHeight}
+        bounds="window"
+      >
+        <Box />
+      </Rnd>
+    ))}
+  </>
 );
 
 export default App;
