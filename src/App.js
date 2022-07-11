@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Rnd } from "react-rnd";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const cellWidth = 200;
+const cellHeight = 200;
+
+const Box = () => (
+  <div className="box" style={{ margin: 0, height: "100%" }}>
+    test
+  </div>
+);
+
+const App = () => (
+  <Rnd
+    default={{
+      x: 0,
+      y: 0,
+      width: cellWidth * 2,
+      height: 200,
+    }}
+    minWidth={cellWidth}
+    minHeight={cellHeight}
+    bounds="window"
+  >
+    <Box />
+  </Rnd>
+);
 
 export default App;
