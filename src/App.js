@@ -1,14 +1,9 @@
 import React from "react";
 import { Rnd } from "react-rnd";
+import styled from "styled-components";
 
 const cellWidth = 100;
 const cellHeight = 100;
-
-const Box = () => (
-  <div className="box" style={{ margin: 0, height: "100%" }}>
-    test
-  </div>
-);
 
 const App = () => (
   <>
@@ -24,10 +19,19 @@ const App = () => (
         minHeight={cellHeight}
         bounds="window"
       >
-        <Box />
+        <Box className="box" />
       </Rnd>
     ))}
   </>
 );
+
+const Box = styled.div`
+  height: 100%;
+  margin: 0;
+  &:active {
+    opacity: 0.7;
+    border: 2px dotted #222;
+  }
+`;
 
 export default App;
