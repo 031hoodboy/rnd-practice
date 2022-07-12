@@ -25,3 +25,33 @@
   align-items: center;
   border-radius: 0.5em;
 }
+
+.app {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.app .editor {
+  margin: 50px 20px;
+}
+.app .DraftEditor-editorContainer {
+  min-height: 150px;
+  min-width: 50px;
+}
+.app .textarea {
+  /* min-height: 100px; */
+  min-width: 50px;
+  margin: 20px;
+  width: 90%;
+}
+
+.div1 {
+  width: 50%;
+  background-color: blue;
+  float: right;
+}
+.div2 {
+  width: 50%;
+  background-color: green;
+  float: left;
+}

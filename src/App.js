@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import GridContext from "./GridContext";
+import "./styles.css";
+
+import TextEditor from "./Components/TextEditor";
 
 const App = () => {
   const [blocks, setBlocks] = useState([]);
@@ -19,6 +22,9 @@ const App = () => {
 
   return (
     <PageBlock>
+      <div className="editor">
+        <TextEditor />
+      </div>
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
         <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
@@ -45,7 +51,7 @@ const App = () => {
             x: 200,
             y: 200,
             width: 200,
-            height: 25,
+            minheight: 30,
             dragEndX: null,
             resizeEndX: null,
             resizeEndWidth: null,
@@ -112,6 +118,7 @@ const TextBlock = styled(Rnd)`
   width: 200px;
   height: 40px;
   border: 1px dotted #222;
+  padding: 5px;
 
   & > :focus {
     outline: none;
@@ -119,10 +126,9 @@ const TextBlock = styled(Rnd)`
 `;
 
 const TextBox = styled.div`
-  padding: 5px;
-  border: 1px dotted #222;
+  /* border: 1px dotted #222;
   &:active {
     border: 1px solid #222;
-  }
+  } */
 `;
 export default App;
