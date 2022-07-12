@@ -103,7 +103,7 @@ const Box = styled(Rnd)`
     opacity: 0.7;
     border: 2px dotted #222;
   }
-  &[contenteditable]:focus {
+  &:focus {
     outline: 0px solid transparent;
   }
 `;
