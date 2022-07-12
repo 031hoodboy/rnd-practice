@@ -111,6 +111,8 @@ const AddBlock = styled.div`
 const TextBlock = styled(Rnd)`
   width: 200px;
   height: 40px;
+  border: 1px dotted #222;
+
   & > :focus {
     outline: none;
   }
