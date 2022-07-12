@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import draftToHtml from "draftjs-to-html";
 import DraftDefaultConfig from "./config";
+import { Rnd } from "react-rnd";
+import styled from "styled-components";
 
 // eslint-disable-next-line import/no-anonymous-default-export
 const TextEditor = () => {
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
-  );
-  console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  //   console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
 
   function uploadImageCallBack(file) {
     return new Promise((resolve, reject) => {
@@ -46,7 +46,24 @@ const TextEditor = () => {
             alt: { present: true, mandatory: false },
           },
         }}
-      />
+      ></Editor>
+      <TextBlock
+        default={{
+          x: 200,
+          y: 200,
+          width: 200,
+          minheight: 30,
+          dragEndX: null,
+          resizeEndX: null,
+          resizeEndWidth: null,
+        }}
+        //   key={key}
+      >
+        <TextBox
+          contentEditable="true"
+          placeholder="Type something..."
+        ></TextBox>
+      </TextBlock>
       <textarea
         className="textarea"
         value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
@@ -68,5 +85,25 @@ const TextEditor = () => {
     </div>
   );
 };
+
+const TextBlock = styled(Rnd)`
+  width: 200px;
+  height: 40px;
+  border: 1px dotted #222;
+  padding: 5px;
+
+  & > :focus {
+    outline: none;
+  }
+`;
+
+const TextBox = styled.div`
+  width: 100%;
+  height: 100%;
+  /* border: 1px dotted #222;
+  &:active {
+    border: 1px solid #222;
+  } */
+`;
 
 export default TextEditor;

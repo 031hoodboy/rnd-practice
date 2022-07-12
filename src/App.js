@@ -2,10 +2,11 @@ import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import GridContext from "./GridContext";
+import Editor2 from "./Components/Editor2";
+
 import "./styles.css";
 
-import TextEditor from "./Components/TextEditor";
-
+// import TextEditor from "./Components/TextEditor";
 const App = () => {
   const [blocks, setBlocks] = useState([]);
   const [texts, setTexts] = useState([]);
@@ -16,15 +17,75 @@ const App = () => {
   };
 
   const onCreateText = () => {
-    console.log("블록이 추가되었습니다.");
+    console.log("텍스트 블록이 추가되었습니다.");
     setTexts([texts.length, ...texts]);
   };
 
+  const editor = document.getElementById("editor");
+  const btnBold = document.getElementById("btn-bold");
+  const btnItalic = document.getElementById("btn-italic");
+  const btnUnderline = document.getElementById("btn-underline");
+  const btnStrike = document.getElementById("btn-strike");
+  const btnOrderedList = document.getElementById("btn-ordered-list");
+  const btnUnorderedList = document.getElementById("btn-unordered-list");
+
+  btnBold.addEventListener("click", function () {
+    setStyle("bold");
+  });
+
+  btnItalic.addEventListener("click", function () {
+    setStyle("italic");
+  });
+
+  btnUnderline.addEventListener("click", function () {
+    setStyle("underline");
+  });
+
+  btnStrike.addEventListener("click", function () {
+    setStyle("strikeThrough");
+  });
+
+  btnOrderedList.addEventListener("click", function () {
+    setStyle("insertOrderedList");
+  });
+
+  btnUnorderedList.addEventListener("click", function () {
+    setStyle("insertUnorderedList");
+  });
+
+  function setStyle(style) {
+    document.execCommand(style);
+    focusEditor();
+  }
+
+  // 버튼 클릭 시 에디터가 포커스를 잃기 때문에 다시 에디터에 포커스를 해줌
+  function focusEditor() {
+    editor.focus({ preventScroll: true });
+  }
+
   return (
     <PageBlock>
-      <div className="editor">
-        <TextEditor />
+      {/* <TextEditor /> */}
+      {/* <Editor2 /> */}
+      <div class="editor-menu">
+        <button id="btn-bold">
+          <b>B</b>
+        </button>
+        <button id="btn-italic">
+          <i>I</i>
+        </button>
+        <button id="btn-underline">
+          <u>U</u>
+        </button>
+        <button id="btn-strike">
+          <s>S</s>
+        </button>
+        <button id="btn-ordered-list">OL</button>
+        <button id="btn-unordered-list">UL</button>
+        <button id="btn-image">IMG</button>
       </div>
+      <div id="editor" contenteditable="true"></div>
+
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
         <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
@@ -126,6 +187,8 @@ const TextBlock = styled(Rnd)`
 `;
 
 const TextBox = styled.div`
+  width: 100%;
+  height: 100%;
   /* border: 1px dotted #222;
   &:active {
     border: 1px solid #222;
