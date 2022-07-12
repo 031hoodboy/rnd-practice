@@ -1,74 +1,15 @@
-import { useState, useRef } from "react";
-import ContentEditable from "react-contenteditable";
+import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
-import {
-  GridContextProvider,
-  GridDropZone,
-  GridItem,
-  swap,
-  move,
-} from "react-grid-dnd";
-
+import GridContext from "./GridContext";
 const cellWidth = 100;
 const cellHeight = 100;
 const granularity = 2;
 
 const App = () => {
-  const [items, setItems] = useState({
-    left: [
-      { id: 1, name: "1" },
-      { id: 2, name: "2" },
-      { id: 3, name: "3" },
-      { id: 4, name: "4" },
-      { id: 5, name: "5" },
-    ],
-  });
-
-  function onChange(sourceId, sourceIndex, targetIndex, targetId) {
-    if (targetId) {
-      const result = move(
-        items[sourceId],
-        items[targetId],
-        sourceIndex,
-        targetIndex
-      );
-      return setItems({
-        ...items,
-        [sourceId]: result[0],
-        [targetId]: result[1],
-      });
-    }
-
-    const result = swap(items[sourceId], sourceIndex, targetIndex);
-    return setItems({
-      ...items,
-      [sourceId]: result,
-    });
-  }
-
   return (
     <>
-      <GridContextProvider onChange={onChange}>
-        <div className="container">
-          <GridDropZone
-            className="dropzone left"
-            id="left"
-            boxesPerRow={3}
-            rowHeight={150}
-          >
-            {items.left.map((item) => (
-              <GridItem key={item.name}>
-                <div className="grid-item">
-                  <div className="grid-item-content">
-                    {item.name.toUpperCase()}
-                  </div>
-                </div>
-              </GridItem>
-            ))}
-          </GridDropZone>
-        </div>
-      </GridContextProvider>
+      <GridContext />
       {[...Array(4).keys()].map((key) => (
         <Box
           default={{
