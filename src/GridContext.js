@@ -17,6 +17,7 @@ const GridContext = () => {
       { id: 5, name: "5" },
     ],
   });
+
   function onChange(sourceId, sourceIndex, targetIndex, targetId) {
     if (targetId) {
       const result = move(
@@ -38,6 +39,7 @@ const GridContext = () => {
       [sourceId]: result,
     });
   }
+
   return (
     <GridContextProvider onChange={onChange}>
       <div className="container">
