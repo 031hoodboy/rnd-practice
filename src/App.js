@@ -7,14 +7,19 @@ const cellHeight = 100;
 const granularity = 2;
 
 const App = () => {
+  const [blocks, setBlocks] = useState([]);
+
+  const onCreate = () => {
+    setBlocks([blocks.length, ...blocks]);
+  };
   return (
-    <>
-      <GridContext />
-      {[...Array(4).keys()].map((key) => (
+    <PageBlock>
+      <AddRnd onClick={onCreate}>Add Block</AddRnd>
+      {blocks.map((key) => (
         <Box
           default={{
-            x: (key * cellWidth) / granularity,
-            y: key * 200 + 400,
+            x: 200,
+            y: 200,
             width: cellWidth * 2,
             height: 200,
             dragEndX: null,
@@ -23,30 +28,46 @@ const App = () => {
           }}
           minWidth={cellWidth}
           minHeight={cellHeight}
-          contenteditable="true"
         >
-          <h1 contenteditable="true">{key}</h1>
+          <span contenteditable="true">contenteditable</span>
         </Box>
       ))}
-    </>
+    </PageBlock>
   );
 };
 
-const Box = styled(Rnd)`
+const PageBlock = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const Box = styled(Rnd)`
   background-color: #fff;
   border: 1px solid #999;
   padding: 15px;
   border-radius: 1rem;
-  z-index: 1;
   &:active {
     opacity: 0.7;
     border: 2px dotted #222;
   }
-  &:focus {
+  & > :focus {
     outline: 0px solid transparent;
   }
 `;
 
+const AddRnd = styled.div`
+  width: 100px;
+  height: 50px;
+  background-color: #5e09dc;
+  cursor: pointer;
+  margin: 20px auto;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  &:active {
+    transform: scale(0.97);
+  }
+`;
 export default App;
