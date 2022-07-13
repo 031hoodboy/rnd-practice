@@ -9,39 +9,7 @@ import "./styles.css";
 // import TextEditor from "./Components/TextEditor";
 const App = () => {
   const [blocks, setBlocks] = useState([]);
-  const [inputs, setInputs] = useState({
-    id: "",
-    value: "",
-  });
-
-  const [textBoxs, setTextBoxs] = useState([
-    {
-      id: "textbox1",
-      value: "value",
-    },
-  ]);
-
-  const onChange = (e) => {
-    const { value } = e.target;
-    setInputs({
-      ...inputs,
-      [value]: value,
-    });
-    console.log(value);
-  };
-
-  const nextId = useRef(2);
-  const onCreate = () => {
-    const newtexts = {
-      id: "textbox" + nextId.current,
-    };
-    setTextBoxs(textBoxs.concat(newtexts));
-
-    setInputs({
-      value: "",
-    });
-    nextId.current += 1;
-  };
+  const [texts, setTexts] = useState([]);
 
   const onCreateBlock = () => {
     console.log("블록이 추가되었습니다.");
@@ -50,7 +18,7 @@ const App = () => {
 
   const onCreateText = () => {
     console.log("텍스트 블록이 추가되었습니다.");
-    setTextBoxs([textBoxs.length, ...textBoxs]);
+    setTexts([texts.length, ...texts]);
   };
 
   const onBold = () => {
@@ -67,6 +35,10 @@ const App = () => {
 
   const onStrike = () => {
     document.getElementById("textbox").style.textDecoration = "line-through";
+  };
+
+  const handleClick = (event) => {
+    console.log(event.currentTarget.id);
   };
 
   return (
@@ -94,7 +66,7 @@ const App = () => {
 
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
-        <AddBlock onClick={onCreate}>Add Text Block</AddBlock>
+        <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
       </AddBlockWrapper>
       {blocks.map((key) => (
         <Box
@@ -115,7 +87,7 @@ const App = () => {
           ></TextBox>
         </Box>
       ))}
-      {textBoxs.map((key) => (
+      {texts.map((key) => (
         <TextBlock
           default={{
             x: 200,
@@ -126,15 +98,15 @@ const App = () => {
             resizeEndX: null,
             resizeEndWidth: null,
           }}
+          key={key}
         >
           <TextBox
             contentEditable="true"
             placeholder="Type something..."
-            id={key.id}
+            onClick={handleClick}
+            id={`textbox${key}`}
             // id="textbox"
-          >
-            {key.value}
-          </TextBox>
+          />
         </TextBlock>
       ))}
       {/* <GridContext /> */}
