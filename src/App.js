@@ -21,24 +21,27 @@ const App = () => {
     setTexts([texts.length, ...texts]);
   };
 
+  const [texboxId, setTextboxId] = useState();
+
+  const handleClick = (event) => {
+    const getTextboxid = event.currentTarget.id;
+    setTextboxId(getTextboxid);
+  };
+
   const onBold = () => {
-    document.getElementById("textbox").style.fontWeight = "bold";
+    document.getElementById(texboxId).style.fontWeight = "bold";
   };
 
   const onItalic = () => {
-    document.getElementById("textbox").style.fontStyle = "italic";
+    document.getElementById(texboxId).style.fontStyle = "italic";
   };
 
   const onUnderline = () => {
-    document.getElementById("textbox").style.textDecoration = "underline";
+    document.getElementById(texboxId).style.textDecoration = "underline";
   };
 
   const onStrike = () => {
-    document.getElementById("textbox").style.textDecoration = "line-through";
-  };
-
-  const handleClick = (event) => {
-    console.log(event.currentTarget.id);
+    document.getElementById(texboxId).style.textDecoration = "line-through";
   };
 
   return (
@@ -163,7 +166,6 @@ const TextBlock = styled(Rnd)`
   height: 40px;
   border: 1px dotted #222;
   padding: 5px;
-
   & > :focus {
     outline: none;
   }
@@ -172,6 +174,7 @@ const TextBlock = styled(Rnd)`
 const TextBox = styled.div`
   width: 100%;
   height: 100%;
+  z-index: 10;
   /* border: 1px dotted #222;
   &:active {
     border: 1px solid #222;
