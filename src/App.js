@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
-import GridContext from "./GridContext";
-import Editor2 from "./Components/Editor2";
+import uuid from "react-uuid";
 
 import "./styles.css";
 
@@ -18,24 +17,24 @@ const App = () => {
 
   const onCreateBlock = () => {
     console.log("블록이 추가되었습니다.");
-    setBlocks([blocks.length, ...blocks]);
+    setBlocks([uuid(), ...blocks]);
   };
 
   const onCreateText = () => {
     console.log("텍스트 블록이 추가되었습니다.");
-    setTexts([texts.length, ...texts]);
+    setTexts([uuid(), ...texts]);
   };
 
-  const handleClick = (event) => {
-    const getTextboxid = event.currentTarget.id;
-    console.log(getTextboxid);
+  const getTextboxid = (e) => {
+    const textboxid = e.currentTarget.id;
+    // console.log(getTextboxid);
 
     // setBold(false);
     // setItalic(false);
     // setUnderline(false);
     // setStrike(false);
 
-    setTextboxId(getTextboxid);
+    setTextboxId(textboxid);
   };
 
   const onBold = () => {
@@ -86,22 +85,9 @@ const App = () => {
     setStrike(!strike);
   };
 
-  const onFontSize = (target) => {
-    const fontSizeSelector = document.getElementById("select-font-size");
-    console.log(fontSizeSelector.value);
-    document.getElementById(
-      texboxId
-    ).style.fontSize = `${fontSizeSelector.value}px`;
-  };
+  const fontsizeList = ["font size", "10", "13", "16", "18", "24", "32", "48"];
 
-  const selectList = ["13", "16", "18", "24", "32", "48"];
-
-  const [Selected, setSelected] = useState("16");
-
-  const handleSelect = (e) => {
-    console.log(Selected);
-
-    setSelected(e.target.value);
+  const fontsizeSelect = (e) => {
     document.getElementById(texboxId).style.fontSize = `${e.target.value}px`;
   };
 
@@ -120,8 +106,8 @@ const App = () => {
         <button id="btn-strike" onClick={onStrike}>
           <s>S</s>
         </button>
-        <select onChange={handleSelect} value={Selected}>
-          {selectList.map((item) => (
+        <select onChange={fontsizeSelect}>
+          {fontsizeList.map((item) => (
             <option value={item} key={item}>
               {item}
             </option>
@@ -148,6 +134,8 @@ const App = () => {
           <TextBox
             contentEditable="true"
             placeholder="Type something..."
+            onClick={getTextboxid}
+            id={key}
           ></TextBox>
         </Box>
       ))}
@@ -156,8 +144,6 @@ const App = () => {
           default={{
             x: 200,
             y: 200,
-            width: 200,
-            minheight: 30,
             dragEndX: null,
             resizeEndX: null,
             resizeEndWidth: null,
@@ -167,8 +153,8 @@ const App = () => {
           <TextBox
             contentEditable="true"
             placeholder="Type something..."
-            onClick={handleClick}
-            id={`textbox${key}`}
+            onClick={getTextboxid}
+            id={key}
           />
         </TextBlock>
       ))}
@@ -196,7 +182,7 @@ const Box = styled(Rnd)`
   }
   [placeholder]:empty:before {
     content: attr(placeholder);
-    color: #555;
+    color: #aaa;
   }
 `;
 
@@ -222,25 +208,23 @@ const AddBlock = styled.div`
 `;
 
 const TextBlock = styled(Rnd)`
-  width: 200px;
-  height: 40px;
   border: 1px dotted #222;
-
   & > :focus {
     outline: none;
   }
   [placeholder]:empty:before {
     content: attr(placeholder);
-    color: #555;
+    color: #aaa;
   }
 `;
 
 const TextBox = styled.div`
   width: 100%;
   height: 100%;
+  padding: 5px 8px;
   outline: none;
-  padding: 5px;
   color: #000;
   border: 1px dotted transparent;
 `;
+
 export default App;
