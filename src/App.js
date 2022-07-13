@@ -22,11 +22,19 @@ const App = () => {
   };
 
   const onBold = () => {
-    document.getElementById("editor").style.fontWeight = "bold";
+    document.getElementById("sad").style.fontWeight = "bold";
   };
 
   const onItalic = () => {
-    document.getElementById("editor").style.fontStyle = "italic";
+    document.getElementById("sad").style.fontStyle = "italic";
+  };
+
+  const onUnderline = () => {
+    document.getElementById("sad").style.textDecoration = "underline";
+  };
+
+  const onStrike = () => {
+    document.getElementById("sad").style.textDecoration = "line-through";
   };
 
   return (
@@ -40,10 +48,10 @@ const App = () => {
         <button id="btn-italic" onClick={onItalic}>
           <i>I</i>
         </button>
-        <button id="btn-underline">
+        <button id="btn-underline" onClick={onUnderline}>
           <u>U</u>
         </button>
-        <button id="btn-strike">
+        <button id="btn-strike" onClick={onStrike}>
           <s>S</s>
         </button>
         <button id="btn-ordered-list">OL</button>
@@ -91,6 +99,7 @@ const App = () => {
           <TextBox
             contentEditable="true"
             placeholder="Type something..."
+            id="sad"
           ></TextBox>
         </TextBlock>
       ))}
