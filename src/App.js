@@ -9,7 +9,39 @@ import "./styles.css";
 // import TextEditor from "./Components/TextEditor";
 const App = () => {
   const [blocks, setBlocks] = useState([]);
-  const [texts, setTexts] = useState([]);
+  const [inputs, setInputs] = useState({
+    id: "",
+    value: "",
+  });
+
+  const [textBoxs, setTextBoxs] = useState([
+    {
+      id: "textbox1",
+      value: "value",
+    },
+  ]);
+
+  const onChange = (e) => {
+    const { value } = e.target;
+    setInputs({
+      ...inputs,
+      [value]: value,
+    });
+    console.log(value);
+  };
+
+  const nextId = useRef(2);
+  const onCreate = () => {
+    const newtexts = {
+      id: "textbox" + nextId.current,
+    };
+    setTextBoxs(textBoxs.concat(newtexts));
+
+    setInputs({
+      value: "",
+    });
+    nextId.current += 1;
+  };
 
   const onCreateBlock = () => {
     console.log("블록이 추가되었습니다.");
@@ -18,23 +50,23 @@ const App = () => {
 
   const onCreateText = () => {
     console.log("텍스트 블록이 추가되었습니다.");
-    setTexts([texts.length, ...texts]);
+    setTextBoxs([textBoxs.length, ...textBoxs]);
   };
 
   const onBold = () => {
-    document.getElementById("sad").style.fontWeight = "bold";
+    document.getElementById("textbox").style.fontWeight = "bold";
   };
 
   const onItalic = () => {
-    document.getElementById("sad").style.fontStyle = "italic";
+    document.getElementById("textbox").style.fontStyle = "italic";
   };
 
   const onUnderline = () => {
-    document.getElementById("sad").style.textDecoration = "underline";
+    document.getElementById("textbox").style.textDecoration = "underline";
   };
 
   const onStrike = () => {
-    document.getElementById("sad").style.textDecoration = "line-through";
+    document.getElementById("textbox").style.textDecoration = "line-through";
   };
 
   return (
@@ -62,7 +94,7 @@ const App = () => {
 
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
-        <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
+        <AddBlock onClick={onCreate}>Add Text Block</AddBlock>
       </AddBlockWrapper>
       {blocks.map((key) => (
         <Box
@@ -83,7 +115,7 @@ const App = () => {
           ></TextBox>
         </Box>
       ))}
-      {texts.map((key) => (
+      {textBoxs.map((key) => (
         <TextBlock
           default={{
             x: 200,
@@ -94,13 +126,15 @@ const App = () => {
             resizeEndX: null,
             resizeEndWidth: null,
           }}
-          key={key}
         >
           <TextBox
             contentEditable="true"
             placeholder="Type something..."
-            id="sad"
-          ></TextBox>
+            id={key.id}
+            // id="textbox"
+          >
+            {key.value}
+          </TextBox>
         </TextBlock>
       ))}
       {/* <GridContext /> */}
