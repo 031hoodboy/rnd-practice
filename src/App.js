@@ -10,6 +10,11 @@ import "./styles.css";
 const App = () => {
   const [blocks, setBlocks] = useState([]);
   const [texts, setTexts] = useState([]);
+  const [texboxId, setTextboxId] = useState();
+  const [bold, setBold] = useState(true);
+  const [italic, setItalic] = useState(true);
+  const [underline, setUnderline] = useState(true);
+  const [strike, setStrike] = useState(true);
 
   const onCreateBlock = () => {
     console.log("블록이 추가되었습니다.");
@@ -21,34 +26,88 @@ const App = () => {
     setTexts([texts.length, ...texts]);
   };
 
-  const [texboxId, setTextboxId] = useState();
-
   const handleClick = (event) => {
     const getTextboxid = event.currentTarget.id;
+    console.log(getTextboxid);
+
+    // setBold(false);
+    // setItalic(false);
+    // setUnderline(false);
+    // setStrike(false);
+
     setTextboxId(getTextboxid);
   };
 
   const onBold = () => {
-    document.getElementById(texboxId).style.fontWeight = "bold";
+    if (bold === true) {
+      document.getElementById(texboxId).style.fontWeight = "bold";
+      document.getElementById("btn-bold").style.backgroundColor = "red";
+    } else {
+      document.getElementById(texboxId).style.fontWeight = "normal";
+      document.getElementById("btn-bold").style.backgroundColor = "buttonface";
+    }
+    setBold(!bold);
   };
 
   const onItalic = () => {
-    document.getElementById(texboxId).style.fontStyle = "italic";
+    if (italic === true) {
+      document.getElementById(texboxId).style.fontStyle = "italic";
+      document.getElementById("btn-italic").style.backgroundColor = "red";
+    } else {
+      document.getElementById(texboxId).style.fontStyle = "normal";
+      document.getElementById("btn-italic").style.backgroundColor =
+        "buttonface";
+    }
+    setItalic(!italic);
   };
 
   const onUnderline = () => {
-    document.getElementById(texboxId).style.textDecoration = "underline";
+    if (underline === true) {
+      document.getElementById(texboxId).style.textDecoration = "underline";
+      document.getElementById("btn-underline").style.backgroundColor = "red";
+    } else {
+      document.getElementById(texboxId).style.textDecoration = "none";
+      document.getElementById("btn-underline").style.backgroundColor =
+        "buttonface";
+    }
+
+    setUnderline(!underline);
   };
 
   const onStrike = () => {
-    document.getElementById(texboxId).style.textDecoration = "line-through";
+    if (strike === true) {
+      document.getElementById(texboxId).style.textDecoration = "line-through";
+      document.getElementById("btn-strike").style.backgroundColor = "red";
+    } else {
+      document.getElementById(texboxId).style.textDecoration = "none";
+      document.getElementById("btn-strike").style.backgroundColor =
+        "buttonface";
+    }
+    setStrike(!strike);
+  };
+
+  const onFontSize = (target) => {
+    const fontSizeSelector = document.getElementById("select-font-size");
+    console.log(fontSizeSelector.value);
+    document.getElementById(
+      texboxId
+    ).style.fontSize = `${fontSizeSelector.value}px`;
+  };
+
+  const selectList = ["13", "16", "18", "24", "32", "48"];
+
+  const [Selected, setSelected] = useState("16");
+
+  const handleSelect = (e) => {
+    console.log(Selected);
+
+    setSelected(e.target.value);
+    document.getElementById(texboxId).style.fontSize = `${e.target.value}px`;
   };
 
   return (
     <PageBlock>
-      {/* <TextEditor /> */}
-      {/* <Editor2 /> */}
-      <div class="editor-menu">
+      <div>
         <button id="btn-bold" onClick={onBold}>
           <b>B</b>
         </button>
@@ -61,12 +120,14 @@ const App = () => {
         <button id="btn-strike" onClick={onStrike}>
           <s>S</s>
         </button>
-        <button id="btn-ordered-list">OL</button>
-        <button id="btn-unordered-list">UL</button>
-        <button id="btn-image">IMG</button>
+        <select onChange={handleSelect} value={Selected}>
+          {selectList.map((item) => (
+            <option value={item} key={item}>
+              {item}
+            </option>
+          ))}
+        </select>
       </div>
-      <div id="editor" contenteditable="true"></div>
-
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
         <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
@@ -108,7 +169,6 @@ const App = () => {
             placeholder="Type something..."
             onClick={handleClick}
             id={`textbox${key}`}
-            // id="textbox"
           />
         </TextBlock>
       ))}
@@ -132,7 +192,7 @@ const Box = styled(Rnd)`
     border: 1px dotted #222;
   }
   & > :focus {
-    outline: 0px solid transparent;
+    outline: none;
   }
   [placeholder]:empty:before {
     content: attr(placeholder);
@@ -165,19 +225,22 @@ const TextBlock = styled(Rnd)`
   width: 200px;
   height: 40px;
   border: 1px dotted #222;
-  padding: 5px;
+
   & > :focus {
     outline: none;
+  }
+  [placeholder]:empty:before {
+    content: attr(placeholder);
+    color: #555;
   }
 `;
 
 const TextBox = styled.div`
   width: 100%;
   height: 100%;
-  z-index: 10;
-  /* border: 1px dotted #222;
-  &:active {
-    border: 1px solid #222;
-  } */
+  outline: none;
+  padding: 5px;
+  color: #000;
+  border: 1px dotted transparent;
 `;
 export default App;
