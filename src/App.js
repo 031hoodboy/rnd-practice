@@ -103,7 +103,10 @@ const App = () => {
           }}
           key={key}
         >
-          <div contentEditable="true" placeholder="Type something..."></div>
+          <TextBox
+            contentEditable="true"
+            placeholder="Type something..."
+          ></TextBox>
         </Box>
       ))}
       {texts.map((key) => (
@@ -144,7 +147,6 @@ const Box = styled(Rnd)`
     opacity: 0.7;
     border: 1px dotted #222;
   }
-
   & > :focus {
     outline: 0px solid transparent;
   }
