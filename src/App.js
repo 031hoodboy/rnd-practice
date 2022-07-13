@@ -21,57 +21,23 @@ const App = () => {
     setTexts([texts.length, ...texts]);
   };
 
-  // const editor = document.getElementById("editor");
-  // const btnBold = document.getElementById("btn-bold");
-  // const btnItalic = document.getElementById("btn-italic");
-  // const btnUnderline = document.getElementById("btn-underline");
-  // const btnStrike = document.getElementById("btn-strike");
-  // const btnOrderedList = document.getElementById("btn-ordered-list");
-  // const btnUnorderedList = document.getElementById("btn-unordered-list");
+  const onBold = () => {
+    document.getElementById("editor").style.fontWeight = "bold";
+  };
 
-  // btnBold.addEventListener("click", function () {
-  //   setStyle("bold");
-  // });
-
-  // btnItalic.addEventListener("click", function () {
-  //   setStyle("italic");
-  // });
-
-  // btnUnderline.addEventListener("click", function () {
-  //   setStyle("underline");
-  // });
-
-  // btnStrike.addEventListener("click", function () {
-  //   setStyle("strikeThrough");
-  // });
-
-  // btnOrderedList.addEventListener("click", function () {
-  //   setStyle("insertOrderedList");
-  // });
-
-  // btnUnorderedList.addEventListener("click", function () {
-  //   setStyle("insertUnorderedList");
-  // });
-
-  // const setStyle = () => {
-  //   // document.style.color = "green";
-  //   // focusEditor();
-  // };
-
-  // // 버튼 클릭 시 에디터가 포커스를 잃기 때문에 다시 에디터에 포커스를 해줌
-  // function focusEditor() {
-  //   editor.focus({ preventScroll: true });
-  // }
+  const onItalic = () => {
+    document.getElementById("editor").style.fontStyle = "italic";
+  };
 
   return (
     <PageBlock>
       {/* <TextEditor /> */}
       {/* <Editor2 /> */}
       <div class="editor-menu">
-        <button id="btn-bold">
+        <button id="btn-bold" onClick={onBold}>
           <b>B</b>
         </button>
-        <button id="btn-italic">
+        <button id="btn-italic" onClick={onItalic}>
           <i>I</i>
         </button>
         <button id="btn-underline">
