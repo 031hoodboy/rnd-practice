@@ -113,86 +113,93 @@ const App = () => {
             <Searchinput placeholder="주소를 입력해주세요. (예시. 지번주소)" />
           </SearchbarWrapper>
         </SearchbarBlock>
+        <Sidebar>
+          <Nav>리포트</Nav>
+          <Nav>분석</Nav>
+          <Nav>데이터 다운로드</Nav>
+        </Sidebar>
       </Header>
-      <AddBlockWrapper>
-        <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
-        <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
-        <AddBlock onClick={onCreateCircle}>Add Circle Block</AddBlock>
-        <StyleBlockWrapper>
-          <button id="btn-bold" onClick={onBold}>
-            <b>B</b>
-          </button>
-          <button id="btn-italic" onClick={onItalic}>
-            <i>I</i>
-          </button>
-          <button id="btn-underline" onClick={onUnderline}>
-            <u>U</u>
-          </button>
-          <button id="btn-strike" onClick={onStrike}>
-            <s>S</s>
-          </button>
-          <select onChange={fontsizeSelect}>
-            {fontsizeList.map((item) => (
-              <option value={item} key={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </StyleBlockWrapper>
-      </AddBlockWrapper>
+      <MapEditBlock>
+        <AddBlockWrapper>
+          <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
+          <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
+          <AddBlock onClick={onCreateCircle}>Add Circle Block</AddBlock>
+          <StyleBlockWrapper>
+            <button id="btn-bold" onClick={onBold}>
+              <b>B</b>
+            </button>
+            <button id="btn-italic" onClick={onItalic}>
+              <i>I</i>
+            </button>
+            <button id="btn-underline" onClick={onUnderline}>
+              <u>U</u>
+            </button>
+            <button id="btn-strike" onClick={onStrike}>
+              <s>S</s>
+            </button>
+            <select onChange={fontsizeSelect}>
+              {fontsizeList.map((item) => (
+                <option value={item} key={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </StyleBlockWrapper>
+        </AddBlockWrapper>
 
-      <Map src={require(`./assets/map.png`)} />
+        <Map src={require(`./assets/map.png`)} />
 
-      {blocks.map((key) => (
-        <Box
-          default={{
-            x: 200,
-            y: 200,
-            width: 200,
-            height: 200,
-            dragEndX: null,
-            resizeEndX: null,
-            resizeEndWidth: null,
-          }}
-          key={key}
-        >
-          <TextBox
-            contentEditable="true"
-            placeholder="Type something..."
-            onClick={getTextboxid}
-            id={key}
-          ></TextBox>
-        </Box>
-      ))}
-      {texts.map((key) => (
-        <TextBlock
-          default={{
-            x: 200,
-            y: 200,
-            dragEndX: null,
-            resizeEndX: null,
-            resizeEndWidth: null,
-          }}
-          key={key}
-        >
-          <TextBox
-            contentEditable="true"
-            placeholder="Type something..."
-            onClick={getTextboxid}
-            id={key}
-          />
-        </TextBlock>
-      ))}
-      {circles.map((key) => (
-        <CircleBox
-          default={{
-            x: 200,
-            y: 200,
-          }}
-          key={key}
-        ></CircleBox>
-      ))}
-      {/* <GridContext /> */}
+        {blocks.map((key) => (
+          <Box
+            default={{
+              x: 200,
+              y: 200,
+              width: 200,
+              height: 200,
+              dragEndX: null,
+              resizeEndX: null,
+              resizeEndWidth: null,
+            }}
+            key={key}
+          >
+            <TextBox
+              contentEditable="true"
+              placeholder="Type something..."
+              onClick={getTextboxid}
+              id={key}
+            ></TextBox>
+          </Box>
+        ))}
+        {texts.map((key) => (
+          <TextBlock
+            default={{
+              x: 200,
+              y: 200,
+              dragEndX: null,
+              resizeEndX: null,
+              resizeEndWidth: null,
+            }}
+            key={key}
+          >
+            <TextBox
+              contentEditable="true"
+              placeholder="Type something..."
+              onClick={getTextboxid}
+              id={key}
+            />
+          </TextBlock>
+        ))}
+        {circles.map((key) => (
+          <CircleBox
+            default={{
+              x: 200,
+              y: 200,
+            }}
+            key={key}
+          ></CircleBox>
+        ))}
+        {/* <GridContext /> */}
+      </MapEditBlock>
     </PageBlock>
   );
 };
@@ -202,8 +209,6 @@ const PageBlock = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #f7f9fc;
   padding-top: 65px;
 `;
@@ -232,6 +237,21 @@ const SearchbarBlock = styled.div`
   background-color: #fff;
   display: flex;
   align-items: center;
+`;
+
+const Sidebar = styled.div`
+  width: 258px;
+  height: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 65px;
+  left: 0;
+`;
+
+const Nav = styled.div`
+  display: flex;
+  font-size: 13px;
+  padding: 12px 28px 12px 32px;
 `;
 
 const SearchbarWrapper = styled.div`
@@ -265,7 +285,7 @@ const Searchinput = styled.input`
 `;
 
 const Map = styled.img`
-  width: 1247px;
+  min-width: 1247px;
   height: 800px;
 `;
 
@@ -294,10 +314,17 @@ const CircleBox = styled(Box)`
   padding: none;
 `;
 
+const MapEditBlock = styled.div`
+  padding-left: 288px;
+  margin: 0 auto;
+  min-width: 1247px;
+`;
+
 const AddBlockWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 1247px;
   margin: 20px 0;
 `;
 
