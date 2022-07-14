@@ -4,13 +4,14 @@ import styled from "styled-components";
 import uuid from "react-uuid";
 import { ReactComponent as LogoIcon } from "./assets/logo.svg";
 import { ReactComponent as SearchIcon } from "./assets/search.svg";
-
 import "./styles.css";
 
 // import TextEditor from "./Components/TextEditor";
 const App = () => {
   const [blocks, setBlocks] = useState([]);
   const [texts, setTexts] = useState([]);
+  const [circles, setCircles] = useState([]);
+
   const [texboxId, setTextboxId] = useState();
   const [bold, setBold] = useState(true);
   const [italic, setItalic] = useState(true);
@@ -27,12 +28,15 @@ const App = () => {
     setTexts([uuid(), ...texts]);
   };
 
+  const onCreateCircle = () => {
+    console.log("원 블록이 추가되었습니다.");
+    setCircles([uuid(), ...circles]);
+  };
+
   const getTextboxid = (e) => {
     const textboxid = e.currentTarget.id;
     // console.log(getTextboxid);
-    const clientRect = textboxid.getBoundingClientRect();
-    const absoluteTop = window.pageYOffset + clientRect.top;
-    console.log(absoluteTop);
+
     // setBold(false);
     // setItalic(false);
     // setUnderline(false);
@@ -44,7 +48,7 @@ const App = () => {
   const onBold = () => {
     if (bold === true) {
       document.getElementById(texboxId).style.fontWeight = "bold";
-      document.getElementById("btn-bold").style.backgroundColor = "#cfcfcf";
+      document.getElementById("btn-bold").style.backgroundColor = "red";
     } else {
       document.getElementById(texboxId).style.fontWeight = "normal";
       document.getElementById("btn-bold").style.backgroundColor = "buttonface";
@@ -55,7 +59,7 @@ const App = () => {
   const onItalic = () => {
     if (italic === true) {
       document.getElementById(texboxId).style.fontStyle = "italic";
-      document.getElementById("btn-italic").style.backgroundColor = "#cfcfcf";
+      document.getElementById("btn-italic").style.backgroundColor = "red";
     } else {
       document.getElementById(texboxId).style.fontStyle = "normal";
       document.getElementById("btn-italic").style.backgroundColor =
@@ -67,8 +71,7 @@ const App = () => {
   const onUnderline = () => {
     if (underline === true) {
       document.getElementById(texboxId).style.textDecoration = "underline";
-      document.getElementById("btn-underline").style.backgroundColor =
-        "#cfcfcf";
+      document.getElementById("btn-underline").style.backgroundColor = "red";
     } else {
       document.getElementById(texboxId).style.textDecoration = "none";
       document.getElementById("btn-underline").style.backgroundColor =
@@ -111,32 +114,35 @@ const App = () => {
           </SearchbarWrapper>
         </SearchbarBlock>
       </Header>
-      <Map src={require(`./assets/map.png`)} />
-      <div>
-        <button id="btn-bold" onClick={onBold}>
-          <b>B</b>
-        </button>
-        <button id="btn-italic" onClick={onItalic}>
-          <i>I</i>
-        </button>
-        <button id="btn-underline" onClick={onUnderline}>
-          <u>U</u>
-        </button>
-        <button id="btn-strike" onClick={onStrike}>
-          <s>S</s>
-        </button>
-        <select onChange={fontsizeSelect}>
-          {fontsizeList.map((item) => (
-            <option value={item} key={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
       <AddBlockWrapper>
         <AddBlock onClick={onCreateBlock}>Add Block</AddBlock>
         <AddBlock onClick={onCreateText}>Add Text Block</AddBlock>
+        <AddBlock onClick={onCreateCircle}>Add Circle Block</AddBlock>
+        <StyleBlockWrapper>
+          <button id="btn-bold" onClick={onBold}>
+            <b>B</b>
+          </button>
+          <button id="btn-italic" onClick={onItalic}>
+            <i>I</i>
+          </button>
+          <button id="btn-underline" onClick={onUnderline}>
+            <u>U</u>
+          </button>
+          <button id="btn-strike" onClick={onStrike}>
+            <s>S</s>
+          </button>
+          <select onChange={fontsizeSelect}>
+            {fontsizeList.map((item) => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </StyleBlockWrapper>
       </AddBlockWrapper>
+
+      <Map src={require(`./assets/map.png`)} />
+
       {blocks.map((key) => (
         <Box
           default={{
@@ -155,10 +161,7 @@ const App = () => {
             placeholder="Type something..."
             onClick={getTextboxid}
             id={key}
-          >
-            <p>{window.pageXOffset}</p>
-            <p>{window.pageYOffset}</p>
-          </TextBox>
+          ></TextBox>
         </Box>
       ))}
       {texts.map((key) => (
@@ -180,18 +183,29 @@ const App = () => {
           />
         </TextBlock>
       ))}
+      {circles.map((key) => (
+        <CircleBox
+          default={{
+            x: 200,
+            y: 200,
+          }}
+          key={key}
+        ></CircleBox>
+      ))}
+      {/* <GridContext /> */}
     </PageBlock>
   );
 };
 
 const PageBlock = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #f7f9fc;
+  padding-top: 65px;
 `;
 
 const Header = styled.div`
@@ -237,7 +251,7 @@ const SearchIconWrapper = styled.div`
 `;
 
 const Searchinput = styled.input`
-  width: 400px;
+  width: 458px;
   font-size: 13px;
   padding: 10px 10px 10px 48px;
   outline: none;
@@ -248,6 +262,11 @@ const Searchinput = styled.input`
   &:hover {
     background-color: #f4f4f5;
   }
+`;
+
+const Map = styled.img`
+  width: 1247px;
+  height: 800px;
 `;
 
 const Box = styled(Rnd)`
@@ -268,19 +287,26 @@ const Box = styled(Rnd)`
   }
 `;
 
+const CircleBox = styled(Box)`
+  background: none;
+  border-radius: 100%;
+  border: 5px solid red;
+  padding: none;
+`;
+
 const AddBlockWrapper = styled.div`
   display: flex;
   justify-content: center;
-  /* position: fixed;
-  top: 10px; */
+  align-items: center;
+  margin: 20px 0;
 `;
 
 const AddBlock = styled.div`
-  padding: 20px;
-  height: 50px;
+  padding: 10px;
   background-color: #5e09dc;
   cursor: pointer;
-  margin: 0 20px;
+  margin: 0 10px;
+  font-size: 12px;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
@@ -290,6 +316,8 @@ const AddBlock = styled.div`
     transform: scale(0.97);
   }
 `;
+
+const StyleBlockWrapper = styled.div``;
 
 const TextBlock = styled(Rnd)`
   border: 1px dotted #222;
@@ -309,11 +337,6 @@ const TextBox = styled.div`
   outline: none;
   color: #000;
   border: 1px dotted transparent;
-`;
-
-const Map = styled.img`
-  width: 1247px;
-  height: 800px;
 `;
 
 export default App;
