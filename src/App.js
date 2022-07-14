@@ -28,7 +28,9 @@ const App = () => {
   const getTextboxid = (e) => {
     const textboxid = e.currentTarget.id;
     // console.log(getTextboxid);
-
+    const clientRect = textboxid.getBoundingClientRect();
+    const absoluteTop = window.pageYOffset + clientRect.top;
+    console.log(absoluteTop);
     // setBold(false);
     // setItalic(false);
     // setUnderline(false);
@@ -40,7 +42,7 @@ const App = () => {
   const onBold = () => {
     if (bold === true) {
       document.getElementById(texboxId).style.fontWeight = "bold";
-      document.getElementById("btn-bold").style.backgroundColor = "red";
+      document.getElementById("btn-bold").style.backgroundColor = "#cfcfcf";
     } else {
       document.getElementById(texboxId).style.fontWeight = "normal";
       document.getElementById("btn-bold").style.backgroundColor = "buttonface";
@@ -51,7 +53,7 @@ const App = () => {
   const onItalic = () => {
     if (italic === true) {
       document.getElementById(texboxId).style.fontStyle = "italic";
-      document.getElementById("btn-italic").style.backgroundColor = "red";
+      document.getElementById("btn-italic").style.backgroundColor = "#cfcfcf";
     } else {
       document.getElementById(texboxId).style.fontStyle = "normal";
       document.getElementById("btn-italic").style.backgroundColor =
@@ -63,7 +65,8 @@ const App = () => {
   const onUnderline = () => {
     if (underline === true) {
       document.getElementById(texboxId).style.textDecoration = "underline";
-      document.getElementById("btn-underline").style.backgroundColor = "red";
+      document.getElementById("btn-underline").style.backgroundColor =
+        "#cfcfcf";
     } else {
       document.getElementById(texboxId).style.textDecoration = "none";
       document.getElementById("btn-underline").style.backgroundColor =
@@ -93,6 +96,7 @@ const App = () => {
 
   return (
     <PageBlock>
+      <Map src={require(`./assets/map.png`)} />
       <div>
         <button id="btn-bold" onClick={onBold}>
           <b>B</b>
@@ -136,7 +140,10 @@ const App = () => {
             placeholder="Type something..."
             onClick={getTextboxid}
             id={key}
-          ></TextBox>
+          >
+            <p>{window.pageXOffset}</p>
+            <p>{window.pageYOffset}</p>
+          </TextBox>
         </Box>
       ))}
       {texts.map((key) => (
@@ -158,14 +165,18 @@ const App = () => {
           />
         </TextBlock>
       ))}
-      {/* <GridContext /> */}
     </PageBlock>
   );
 };
 
 const PageBlock = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f9fc;
 `;
 
 const Box = styled(Rnd)`
@@ -189,6 +200,8 @@ const Box = styled(Rnd)`
 const AddBlockWrapper = styled.div`
   display: flex;
   justify-content: center;
+  position: fixed;
+  top: 10px;
 `;
 
 const AddBlock = styled.div`
@@ -196,7 +209,7 @@ const AddBlock = styled.div`
   height: 50px;
   background-color: #5e09dc;
   cursor: pointer;
-  margin: 20px;
+  margin: 0 20px;
   border-radius: 1rem;
   display: flex;
   justify-content: center;
@@ -225,6 +238,11 @@ const TextBox = styled.div`
   outline: none;
   color: #000;
   border: 1px dotted transparent;
+`;
+
+const Map = styled.img`
+  width: 1247px;
+  height: 800px;
 `;
 
 export default App;
