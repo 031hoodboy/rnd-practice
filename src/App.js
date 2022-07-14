@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import { Rnd } from "react-rnd";
 import styled from "styled-components";
 import uuid from "react-uuid";
+import { ReactComponent as LogoIcon } from "./assets/logo.svg";
+import { ReactComponent as SearchIcon } from "./assets/search.svg";
 
 import "./styles.css";
 
@@ -96,6 +98,19 @@ const App = () => {
 
   return (
     <PageBlock>
+      <Header>
+        <LogoBlock>
+          <LogoIcon />
+        </LogoBlock>
+        <SearchbarBlock>
+          <SearchbarWrapper>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <Searchinput placeholder="주소를 입력해주세요. (예시. 지번주소)" />
+          </SearchbarWrapper>
+        </SearchbarBlock>
+      </Header>
       <Map src={require(`./assets/map.png`)} />
       <div>
         <button id="btn-bold" onClick={onBold}>
@@ -170,13 +185,69 @@ const App = () => {
 };
 
 const PageBlock = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #f7f9fc;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+`;
+
+const LogoBlock = styled.div`
+  width: 258px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+`;
+
+const SearchbarBlock = styled.div`
+  width: calc(100% - 258px);
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+`;
+
+const SearchbarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+`;
+
+const SearchIconWrapper = styled.div`
+  position: absolute;
+  margin-left: 12px;
+  svg {
+    margin-top: 4px;
+    width: 22px;
+    height: 22px;
+  }
+`;
+
+const Searchinput = styled.input`
+  width: 400px;
+  font-size: 13px;
+  padding: 10px 10px 10px 48px;
+  outline: none;
+  border: none;
+  font-weight: 400;
+  line-height: 1.4375em;
+  color: rgba(0, 0, 0, 0.87);
+  &:hover {
+    background-color: #f4f4f5;
+  }
 `;
 
 const Box = styled(Rnd)`
@@ -200,8 +271,8 @@ const Box = styled(Rnd)`
 const AddBlockWrapper = styled.div`
   display: flex;
   justify-content: center;
-  position: fixed;
-  top: 10px;
+  /* position: fixed;
+  top: 10px; */
 `;
 
 const AddBlock = styled.div`
